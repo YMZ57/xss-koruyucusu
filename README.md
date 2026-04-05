@@ -31,10 +31,12 @@ Bu projenin amaci:
 Projede kullanici, yorum formuna bir ad ve yorum girer.
 
 ### Guvensiz Sayfa
+
 Bu bolumde kullanici girdisi herhangi bir koruma uygulanmadan ekrana basilir.  
 Bu nedenle kullanicinin girdigi zararli bir script kodu tarayici tarafinda calisabilir.
 
 ### Guvenli Sayfa
+
 Bu bolumde ise kullanicidan gelen veri backend tarafinda `escape()` fonksiyonu ile donusturulur.  
 Boylece `<script>` gibi etiketler HTML veya JavaScript olarak degil, duz metin olarak gorunur.
 
@@ -46,24 +48,32 @@ Asagidaki payload, guvensiz sayfada test amaciyla kullanilabilir:
 
 ```html
 <script>alert('XSS')</script>
+```
 
 Bu payload:
 
-Guvensiz Sayfa icinde calisabilir
-Guvenli Sayfa icinde ise sadece yazi olarak gorunur
+- **Guvensiz Sayfa** icinde calisabilir
+- **Guvenli Sayfa** icinde ise sadece yazi olarak gorunur
 
 Bu fark, uygulanan korumanin dogrudan sonucudur.
 
-Kullanilan Teknolojiler
+---
+
+## Kullanilan Teknolojiler
 
 Bu projede asagidaki teknolojiler kullanilmistir:
 
-Python
-Flask
-HTML
-CSS
-MarkupSafe
-Dosya Yapisi
+- Python
+- Flask
+- HTML
+- CSS
+- MarkupSafe
+
+---
+
+## Dosya Yapisi
+
+```text
 xss_project/
 │
 ├── app.py
@@ -77,72 +87,111 @@ xss_project/
 │
 └── static/
     └── style.css
-Dosyalarin Gorevleri
-app.py
+```
+
+---
+
+## Dosyalarin Gorevleri
+
+### app.py
 Flask uygulamasinin ana dosyasidir. Route yapilari ve yorum isleme mantigi burada bulunur.
-requirements.txt
+
+### requirements.txt
 Projenin calismasi icin gerekli Python kutuphanelerini icerir.
-templates/index.html
+
+### templates/index.html
 Ana giris sayfasidir.
-templates/vulnerable.html
+
+### templates/vulnerable.html
 Guvensiz yorum sayfasidir. XSS aciginin nasil olustugunu gostermek icin kullanilir.
-templates/safe.html
+
+### templates/safe.html
 Guvenli yorum sayfasidir. Escape edilmis veri ile koruma uygulanir.
-static/style.css
+
+### static/style.css
 Sayfalarin gorunumunu duzenleyen CSS dosyasidir.
-Kurulum
+
+---
+
+## Kurulum
 
 Projeyi calistirmak icin once gerekli kutuphaneler yuklenmelidir:
 
+```bash
 pip install -r requirements.txt
+```
 
 Ardindan uygulama baslatilir:
 
+```bash
 python app.py
+```
 
 Daha sonra tarayicidan asagidaki adres acilir:
 
+```text
 http://127.0.0.1:5000
-Test Adimlari
-1. Guvensiz Sayfa Testi
-Ana sayfadan Guvensiz Sayfa secilir.
-Yorum kutusuna asagidaki payload yazilir:
+```
+
+---
+
+## Test Adimlari
+
+### 1. Guvensiz Sayfa Testi
+
+1. Ana sayfadan **Guvensiz Sayfa** secilir.
+2. Yorum kutusuna asagidaki payload yazilir:
+
+```html
 <script>alert('XSS')</script>
-Yorum gonderilir.
-Eger popup penceresi aciliyorsa, XSS payload'i basarili sekilde calismistir.
-2. Guvenli Sayfa Testi
-Ana sayfadan Guvenli Sayfa secilir.
-Ayni payload tekrar girilir.
-Yorum gonderilir.
-Popup acilmaz, payload yalnizca duz metin olarak gorunur.
-Guvenlik Yaklasimi
+```
+
+3. Yorum gonderilir.
+4. Eger popup penceresi aciliyorsa, XSS payload'i basarili sekilde calismistir.
+
+### 2. Guvenli Sayfa Testi
+
+1. Ana sayfadan **Guvenli Sayfa** secilir.
+2. Ayni payload tekrar girilir.
+3. Yorum gonderilir.
+4. Popup acilmaz, payload yalnizca duz metin olarak gorunur.
+
+---
+
+## Guvenlik Yaklasimi
 
 Bu projede uygulanan temel savunma yaklasimi, kullanicidan gelen veriyi dogrudan render etmemektir.
 
 Guvenli sayfada su mantik kullanilmistir:
 
+```python
 from markupsafe import escape
 
 safe_comment = escape(comment)
+```
 
 Bu yaklasim sayesinde:
 
-< ve > gibi karakterler dogrudan islenmez
-tarayici bu veriyi kod olarak calistirmaz
-zararli scriptler duz metne donusur
+- `<` ve `>` gibi karakterler dogrudan islenmez
+- tarayici bu veriyi kod olarak calistirmaz
+- zararli scriptler duz metne donusur
 
 Bu, temel ama etkili bir XSS savunmasidir.
 
-Sonuc
+---
+
+## Sonuc
 
 Bu proje ile su fark acik sekilde gosterilmektedir:
 
-Kullanici girdisi dogrudan islenirse XSS acigi olusabilir.
-Kullanici girdisi guvenli sekilde escape edilirse zararli scriptlerin calisma riski azalir.
-Web uygulamalarinda input guvenligi, sadece frontend degil backend tarafinda da ele alinmalidir.
+- Kullanici girdisi dogrudan islenirse XSS acigi olusabilir.
+- Kullanici girdisi guvenli sekilde escape edilirse zararli scriptlerin calisma riski azalir.
+- Web uygulamalarinda input guvenligi, sadece frontend degil backend tarafinda da ele alinmalidir.
 
 Bu nedenle kullanici verileri guvenli sekilde filtrelenmeli, escape edilmeli veya uygun sanitize yontemleri ile islenmelidir.
 
-Yapan
+---
+
+## Yapan
 
 YMZ57
