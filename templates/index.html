@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSS Koruyucusu</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>XSS Koruyucusu Projesi</h1>
+            <p>
+                Bu uygulama, kullanici yorum formlarinda XSS acigini ve buna karsi
+                alinan savunmayi gosterir.
+            </p>
+
+            <div class="button-group">
+                <a class="btn btn-danger" href="/vulnerable">Guvensiz Sayfa</a>
+                <a class="btn btn-success" href="/safe">Guvenli Sayfa</a>
+                <a class="btn btn-dark" href="/reset">Yorumlari Temizle</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
